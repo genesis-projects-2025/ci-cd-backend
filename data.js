@@ -83,7 +83,10 @@ pool
 
 // ---------- Health check ----------
 app.get("/healthz", (_, res) => res.send("ok"))
-
+// to maintain docker versions
+// tags: |
+//   ${{ secrets.DOCKER_USERNAME }}/ci-cd-backend:latest
+//   ${{ secrets.DOCKER_USERNAME }}/ci-cd-backend:${{ github.sha }}
 //checking database-----------
 app.get("/get-all-employees", async (req, res) => {
   try {
