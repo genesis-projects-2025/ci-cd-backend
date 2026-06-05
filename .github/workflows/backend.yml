@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build-and-push:
+  build-push-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -30,5 +30,19 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/ci-cd-backend:latest
 
-      - name: Image pushed successfully
-        run: echo "Docker image pushed to Docker Hub"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1
+
+      - name: Force ECS Deployment
+        run: |
+          aws ecs update-service \
+            --cluster ci-cd-backend-mahesh \
+            --service ci-cd-backend-service \
+            --force-new-deployment
+
+      - name: Deployment Complete
+        run: echo "Docker image pushed and ECS service redeployed successfully"
