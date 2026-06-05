@@ -83,6 +83,9 @@ pool
 
 // ---------- Health check ----------
 app.get("/healthz", (_, res) => res.send("ok"))
+app.get("/hello-world", (req, res) => {
+  res.json({ message: "Hello, World!" });
+});
 // to maintain docker versions
 // tags: |
 //   ${{ secrets.DOCKER_USERNAME }}/ci-cd-backend:latest
