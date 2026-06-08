@@ -86,6 +86,9 @@ app.get("/healthz", (_, res) => res.send("ok"))
 app.get("/hello-world", (req, res) => {
   res.json({ message: "Hello, World!" });
 });
+app.get("/hello-world1", (req, res) => {
+  res.json({ message: "Hello, World1!" });
+});
 // to maintain docker versions
 // tags: |
 //   ${{ secrets.DOCKER_USERNAME }}/ci-cd-backend:latest
